@@ -118,12 +118,12 @@ export default function WorkspacePage() {
 
         {/* Main panel */}
         <section className="min-w-0 rounded-xl border border-border bg-card">
-          <div className="flex overflow-x-auto border-b border-border">
+          <div className="grid grid-cols-5 border-b border-border lg:flex lg:overflow-x-auto">
             {tabs.map(({ id, label, icon: Icon }) => (
               <button
                 key={id}
                 onClick={() => setTab(id)}
-                className={`flex items-center gap-2 whitespace-nowrap px-5 py-3.5 text-sm font-medium transition-colors ${
+                className={`flex flex-col items-center gap-1 px-1 py-2.5 text-[11px] font-medium transition-colors sm:text-xs lg:flex-row lg:gap-2 lg:whitespace-nowrap lg:px-5 lg:py-3.5 lg:text-sm ${
                   tab === id
                     ? "border-b-2 border-primary text-primary"
                     : "text-muted-foreground hover:text-foreground"
@@ -205,7 +205,7 @@ function ChatPanel({ materialId }: { materialId: number | null }) {
   }
 
   return (
-    <div className="flex h-[560px] flex-col">
+    <div className="flex h-[min(560px,calc(100dvh-16rem))] min-h-[380px] flex-col">
       <div className="flex-1 space-y-4 overflow-y-auto pr-1">
         {messages.map((msg, i) => (
           <div key={i} className={`flex gap-3 ${msg.role === "user" ? "justify-end" : ""}`}>

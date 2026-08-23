@@ -11,7 +11,7 @@ import {
   User,
   X,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Logo } from "@/components/ui-bits";
 
 const nav = [
@@ -26,6 +26,25 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [loggingOut, setLoggingOut] = useState(false);
+
+  // Kunci scroll body saat drawer terbuka + tutup dengan Escape
+  useEffect(() => {
+    if (!open) return;
+    document.body.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
+
+  // Tutup drawer saat pindah halaman
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
 
   async function handleLogout() {
     setLoggingOut(true);
@@ -84,32 +103,44 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       </aside>
 
       {/* Topbar mobile */}
-      <header className="sticky top-0 z-40 flex h-16 items-center justify-between border-b border-border bg-background px-4 lg:hidden">
+      <header className="sticky top-0 z-40 flex h-16 items-center justify-between border-b border-border bg-card/95 px-4 backdrop-blur lg:hidden">
         <Logo />
         <button
           onClick={() => setOpen(!open)}
-          aria-label="Buka menu"
-          className="rounded-lg border border-border p-2"
+          aria-label={open ? "Tutup menu" : "Buka menu"}
+          aria-expanded={open}
+          className="rounded-lg border border-border p-2 active:bg-muted"
         >
           {open ? <X size={18} /> : <Menu size={18} />}
         </button>
       </header>
 
       {/* Drawer mobile */}
-      {open && (
-        <div className="fixed inset-0 z-50 lg:hidden">
-          <div
-            className="absolute inset-0 bg-black/50"
-            onClick={() => setOpen(false)}
-          />
-          <aside className="absolute inset-y-0 left-0 w-64 bg-card shadow-xl">
-            {sidebar}
-          </aside>
-        </div>
-      )}
+      <div
+        className={`fixed inset-0 z-50 lg:hidden ${
+          open ? "" : "pointer-events-none"
+        }`}
+        aria-hidden={!open}
+      >
+        {/* Backdrop fade */}
+        <div
+          onClick={() => setOpen(false)}
+          className={`absolute inset-0 bg-black/50 transition-opacity duration-200 ${
+            open ? "opacity-100" : "opacity-0"
+          }`}
+        />
+        {/* Panel slide */}
+        <aside
+          className={`absolute inset-y-0 left-0 w-[17rem] max-w-[85vw] bg-card shadow-xl transition-transform duration-200 ease-out ${
+            open ? "translate-x-0" : "-translate-x-full"
+          }`}
+        >
+          {sidebar}
+        </aside>
+      </div>
 
       <main className="lg:pl-64">
-        <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6">{children}</div>
+        <div className="mx-auto max-w-6xl px-3 py-6 sm:px-6 sm:py-8">{children}</div>
       </main>
     </div>
   );

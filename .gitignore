@@ -45,3 +45,6 @@ next-env.d.ts
 
 # environment (API key)
 .env*
+
+.vercel
+.env*

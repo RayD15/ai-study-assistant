@@ -13,19 +13,28 @@
   --primary: #4f46e5;
   --primary-hover: #4338ca;
   --primary-foreground: #ffffff;
+
+  /* Gradasi halaman: putih -> abu sangat muda (light) */
+  --bg-gradient-from: #ffffff;
+  --bg-gradient-to: #eef2f7;
 }
 
 .dark {
-  --background: #0b1120;
-  --foreground: #e2e8f0;
-  --card: #101830;
-  --card-foreground: #e2e8f0;
-  --muted: #1a2440;
-  --muted-foreground: #94a3b8;
-  --border: #22304f;
+  /* Skema NETRAL hitam-abu, tanpa nuansa ungu/biru */
+  --background: #101214;
+  --foreground: #ececec;
+  --card: #17191c;
+  --card-foreground: #ececec;
+  --muted: #202327;
+  --muted-foreground: #9a9fa6;
+  --border: #2a2d31;
   --primary: #6366f1;
   --primary-hover: #818cf8;
   --primary-foreground: #ffffff;
+
+  /* Gradasi halaman: abu gelap -> hampir hitam */
+  --bg-gradient-from: #1c1e21;
+  --bg-gradient-to: #0a0a0b;
 }
 
 @theme inline {
@@ -44,6 +53,24 @@
 }
 
 body {
-  background: var(--background);
   color: var(--foreground);
+  /* Gradasi vertikal halus dari atas ke bawah */
+  background:
+    linear-gradient(to bottom, var(--bg-gradient-from), var(--bg-gradient-to))
+    fixed,
+    var(--background);
+  min-height: 100vh;
+}
+
+/* Scrollbar tipis senada tema */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
 }
