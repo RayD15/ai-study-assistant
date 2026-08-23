@@ -4,7 +4,6 @@ Asisten belajar berbasis AI yang membantu pelajar memahami materi pelajaran — 
 
 ## ✨ Fitur
 
-- **AI Chat** — tanya jawab berdasarkan konteks materi yang dipilih, AI menjawab sesuai isi materi
 - **Summary** — ringkasan materi otomatis dalam 3 mode panjang: singkat, normal, detail
 - **Quiz** — soal latihan pilihan ganda & true/false yang dibuat AI dari materi, lengkap dengan pembahasan dan review jawaban
 - **Flashcard** — kartu belajar auto-generated, bisa diacak dan ditandai *mastered*
