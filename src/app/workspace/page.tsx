@@ -2,7 +2,6 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
-  Bot,
   BrainCircuit,
   Check,
   ChevronLeft,
@@ -10,11 +9,8 @@ import {
   FileText,
   Layers,
   Loader2,
-  MessageSquareText,
-  Send,
   Shuffle,
   Sparkles,
-  User as UserIcon,
   X,
 } from "lucide-react";
 import { AppShell, PageHeader } from "@/components/app-shell";
@@ -26,8 +22,6 @@ type Material = {
   fileType: string;
   createdAt: string;
 };
-
-type ChatMsg = { role: "user" | "assistant"; content: string };
 
 type QuizQuestionDto = { id: number; question: string; options: string[] };
 
@@ -48,10 +42,9 @@ type QuizResult = {
 
 type FlashcardDto = { id?: number; question: string; answer: string; mastered?: boolean };
 
-type Tab = "chat" | "summary" | "quiz" | "flashcard" | "explain";
+type Tab = "summary" | "quiz" | "flashcard" | "explain";
 
-const tabs: { id: Tab; label: string; icon: typeof Bot }[] = [
-  { id: "chat", label: "AI Chat", icon: MessageSquareText },
+const tabs: { id: Tab; label: string; icon: typeof Layers }[] = [
   { id: "summary", label: "Summary", icon: Layers },
   { id: "quiz", label: "Quiz", icon: BrainCircuit },
   { id: "flashcard", label: "Flashcard", icon: FileText },
@@ -61,7 +54,7 @@ const tabs: { id: Tab; label: string; icon: typeof Bot }[] = [
 export default function WorkspacePage() {
   const [materials, setMaterials] = useState<Material[]>([]);
   const [materialId, setMaterialId] = useState<number | null>(null);
-  const [tab, setTab] = useState<Tab>("chat");
+  const [tab, setTab] = useState<Tab>("summary");
   const [loadingMaterials, setLoadingMaterials] = useState(true);
 
   useEffect(() => {
@@ -136,13 +129,12 @@ export default function WorkspacePage() {
           </div>
 
           <div className="p-4 sm:p-6">
-            {!materialId && tab !== "chat" ? (
+            {!materialId ? (
               <p className="py-12 text-center text-sm text-muted-foreground">
                 Pilih materi terlebih dahulu. Belum punya? Upload di Library.
               </p>
             ) : (
               <>
-                {tab === "chat" && <ChatPanel materialId={materialId} />}
                 {tab === "summary" && <SummaryPanel materialId={materialId} />}
                 {tab === "quiz" && <QuizPanel materialId={materialId} />}
                 {tab === "flashcard" && <FlashcardPanel materialId={materialId} />}
@@ -161,105 +153,6 @@ function ErrorBox({ message }: { message: string }) {
     <p className="rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-600 dark:text-red-400">
       {message}
     </p>
-  );
-}
-
-/* ---------------- AI Chat ---------------- */
-
-function ChatPanel({ materialId }: { materialId: number | null }) {
-  const [messages, setMessages] = useState<ChatMsg[]>([
-    {
-      role: "assistant",
-      content:
-        "Halo. Aku asisten belajarmu. Tanyakan apa saja — jika kamu memilih materi, aku akan menjawab berdasarkan materinya.",
-    },
-  ]);
-  const [input, setInput] = useState("");
-  const [thinking, setThinking] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  async function send(text?: string) {
-    const content = (text ?? input).trim();
-    if (!content || thinking) return;
-    setInput("");
-    setError(null);
-
-    const history = messages.filter((m) => m !== messages[0]);
-    setMessages((m) => [...m, { role: "user", content }]);
-    setThinking(true);
-
-    try {
-      const res = await fetch("/api/ai/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ materialId, history, question: content }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error ?? "Gagal mendapat jawaban.");
-      setMessages((m) => [...m, { role: "assistant", content: data.answer }]);
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "Terjadi kesalahan.");
-    } finally {
-      setThinking(false);
-    }
-  }
-
-  return (
-    <div className="flex h-[min(560px,calc(100dvh-16rem))] min-h-[380px] flex-col">
-      <div className="flex-1 space-y-4 overflow-y-auto pr-1">
-        {messages.map((msg, i) => (
-          <div key={i} className={`flex gap-3 ${msg.role === "user" ? "justify-end" : ""}`}>
-            {msg.role === "assistant" && (
-              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
-                <Bot size={16} />
-              </span>
-            )}
-            <div
-              className={`max-w-[80%] rounded-xl px-4 py-3 text-sm leading-relaxed whitespace-pre-wrap ${
-                msg.role === "user"
-                  ? "bg-primary text-primary-foreground"
-                  : "border border-border bg-background"
-              }`}
-            >
-              {msg.content}
-            </div>
-            {msg.role === "user" && (
-              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-muted">
-                <UserIcon size={16} />
-              </span>
-            )}
-          </div>
-        ))}
-        {thinking && (
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <Loader2 size={14} className="animate-spin" /> AI sedang mengetik...
-          </div>
-        )}
-        {error && <ErrorBox message={error} />}
-      </div>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          send();
-        }}
-        className="mt-4 flex items-center gap-2 border-t border-border pt-4"
-      >
-        <input
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="Tanyakan sesuatu tentang materi ini..."
-          className="flex-1 rounded-lg border border-border bg-background px-4 py-2.5 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
-        />
-        <button
-          type="submit"
-          disabled={!input.trim() || thinking}
-          aria-label="Kirim"
-          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary text-primary-foreground transition-colors hover:bg-primary-hover disabled:opacity-50"
-        >
-          <Send size={16} />
-        </button>
-      </form>
-    </div>
   );
 }
 

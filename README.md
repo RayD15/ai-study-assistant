@@ -78,7 +78,7 @@ src/
 │   ├── api/            # Route handlers (auth, materials, quizzes, ai/*)
 │   ├── dashboard/      # Ringkasan aktivitas & statistik belajar
 │   ├── library/        # Upload & kelola materi
-│   ├── workspace/      # Fitur AI utama (chat, summary, quiz, flashcard, explain)
+│   ├── workspace/      # Fitur AI utama (summary, quiz, flashcard, explain)
 │   ├── profile/        # Profil pengguna
 │   └── login|register/ # Autentikasi
 ├── components/         # AppShell, theme provider, UI bits

@@ -153,19 +153,3 @@ export const mockFlashcards: Flashcard[] = [
   },
 ];
 
-export const mockChatMessages = [
-  {
-    role: "assistant" as const,
-    content:
-      "Halo Ray. Aku sudah membaca materi Algoritma dan Pemrograman. Tanyakan apa saja tentang materinya.",
-  },
-  {
-    role: "user" as const,
-    content: "Apa itu inheritance dalam OOP?",
-  },
-  {
-    role: "assistant" as const,
-    content:
-      "Inheritance (pewarisan) adalah mekanisme di mana sebuah class dapat mewarisi properti dan method dari class lain.\n\nContoh sederhana:\nclass Hewan punya atribut nama dan method makan().\nClass Burung mewarisi keduanya, lalu menambahkan method terbang().\n\nDengan begitu kita tidak perlu menulis ulang kode yang sama. Coba jelaskan dengan kata-katamu sendiri: kenapa inheritance membantu mengurangi duplikasi kode?",
-  },
-];

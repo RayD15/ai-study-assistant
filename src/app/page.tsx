@@ -8,7 +8,6 @@ import {
   CheckCircle2,
   FileText,
   Layers,
-  MessageSquareText,
   Sparkles,
   Trophy,
 } from "lucide-react";
@@ -19,11 +18,6 @@ const features = [
     icon: FileText,
     title: "Upload Materi",
     desc: "Masukkan PDF, TXT, atau copy-paste materi. AI membacanya sebagai konteks belajar.",
-  },
-  {
-    icon: MessageSquareText,
-    title: "AI Chat",
-    desc: "Bertanya kapan saja tentang materi pelajaranmu, dijawab dengan bahasa sederhana.",
   },
   {
     icon: Layers,

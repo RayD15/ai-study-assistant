@@ -64,28 +64,6 @@ async function generate(prompt: string): Promise<string> {
   throw lastErr;
 }
 
-export async function aiChat(
-  materialContent: string | null,
-  history: { role: "user" | "assistant"; content: string }[],
-  question: string,
-): Promise<string> {
-  const parts: string[] = [];
-
-  if (materialContent) {
-    parts.push(
-      `Berikut materi pelajaran yang menjadi konteks percakapan:\n\n<material>\n${clampMaterial(materialContent)}\n</material>`,
-    );
-  }
-
-  for (const m of history.slice(-10)) {
-    parts.push(`${m.role === "user" ? "Student" : "You"}: ${m.content}`);
-  }
-
-  parts.push(`Student: ${question}`);
-
-  return generate(parts.join("\n\n"));
-}
-
 export async function aiSummary(
   materialContent: string,
   length: "singkat" | "normal" | "detail",
