@@ -1,36 +1,105 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 📚 AI Study Assistant
 
-## Getting Started
+Asisten belajar berbasis AI yang membantu pelajar memahami materi pelajaran — bukan sekadar chatbot. Upload materi (PDF atau tempel teks), lalu belajar lebih efektif dengan ringkasan otomatis, quiz interaktif, flashcard, dan penjelasan konsep.
 
-First, run the development server:
+## ✨ Fitur
+
+- **AI Chat** — tanya jawab berdasarkan konteks materi yang dipilih, AI menjawab sesuai isi materi
+- **Summary** — ringkasan materi otomatis dalam 3 mode panjang: singkat, normal, detail
+- **Quiz** — soal latihan pilihan ganda & true/false yang dibuat AI dari materi, lengkap dengan pembahasan dan review jawaban
+- **Flashcard** — kartu belajar auto-generated, bisa diacak dan ditandai *mastered*
+- **Explain** — penjelasan konsep dengan level berbeda (SMP / SMA / pemula total)
+- **Gamifikasi** — XP, level, dan streak untuk menjaga motivasi belajar
+- **Autentikasi** — registrasi & login dengan JWT (cookie httpOnly), proteksi route via middleware
+- **Upload Materi** — dukungan PDF (ekstraksi teks via `unpdf`) dan teks manual
+
+## 🛠️ Tech Stack
+
+| Layer | Teknologi |
+|---|---|
+| Framework | [Next.js 16](https://nextjs.org) (App Router) + React 19 |
+| Styling | Tailwind CSS v4 |
+| AI | [Google Gemini API](https://ai.google.dev) (`@google/genai`) |
+| Database | SQLite lokal / [Turso](https://turso.tech) cloud (`@libsql/client`) |
+| Auth | `jose` (JWT) + `bcryptjs` |
+| Ekstraksi PDF | `unpdf` |
+| Icons | `lucide-react` |
+
+## 🚀 Menjalankan Project
+
+### 1. Clone & install dependencies
+
+```bash
+git clone https://github.com/RayD15/ai-study-assistant.git
+cd ai-study-assistant
+npm install
+```
+
+### 2. Setup environment variables
+
+Buat file `.env.local` di root project:
+
+```env
+# Ambil gratis di https://aistudio.google.com/apikey
+GEMINI_API_KEY=your_gemini_api_key
+
+# Secret untuk signing JWT session (min. 32 karakter acak)
+AUTH_SECRET=ganti-dengan-string-acak-minimal-32-karakter
+
+# (Opsional) Pakai Turso untuk production — jika kosong, pakai SQLite lokal di ./data/app.db
+TURSO_DATABASE_URL=
+TURSO_AUTH_TOKEN=
+
+# (Opsional) Lokasi file SQLite kustom
+DB_PATH=
+```
+
+### 3. Jalankan development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Buka [http://localhost:3000](http://localhost:3000), daftar akun, upload materi di halaman **Library**, lalu mulai belajar di **Workspace**.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📜 Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Command | Fungsi |
+|---|---|
+| `npm run dev` | Development server (Turbopack) |
+| `npm run build` | Build production |
+| `npm run start` | Jalankan hasil build production |
+| `npm run lint` | ESLint |
 
-## Learn More
+## 📁 Struktur Project
 
-To learn more about Next.js, take a look at the following resources:
+```
+src/
+├── app/
+│   ├── api/            # Route handlers (auth, materials, quizzes, ai/*)
+│   ├── dashboard/      # Ringkasan aktivitas & statistik belajar
+│   ├── library/        # Upload & kelola materi
+│   ├── workspace/      # Fitur AI utama (chat, summary, quiz, flashcard, explain)
+│   ├── profile/        # Profil pengguna
+│   └── login|register/ # Autentikasi
+├── components/         # AppShell, theme provider, UI bits
+├── lib/
+│   ├── gemini.ts       # Integrasi Gemini + prompt engineering
+│   ├── auth.ts         # Sesi JWT & helper getCurrentUser()
+│   ├── db.ts           # Dual-mode DB client (Turso / SQLite lokal)
+│   └── xp.ts           # Logika gamifikasi XP & level
+└── middleware.ts       # Proteksi route (redirect login/dashboard)
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## ☁️ Deploy ke Vercel
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Push project ke GitHub
+2. Import repo di [Vercel](https://vercel.com/new)
+3. Set environment variables (`GEMINI_API_KEY`, `AUTH_SECRET`, dan opsional `TURSO_DATABASE_URL` + `TURSO_AUTH_TOKEN`)
+4. Deploy
 
-## Deploy on Vercel
+> ⚠️ Untuk production, selalu set `AUTH_SECRET` yang kuat dan gunakan Turso sebagai database (filesystem Vercel bersifat ephemeral, SQLite lokal tidak persisten).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📄 License
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT
