@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "AI Study Assistant",
+  title: "Ray Study Assistant",
   description:
     "Asisten belajar berbasis AI: rangkuman, quiz, flashcard, dan penjelasan materi untuk pelajar.",
 };

@@ -24,7 +24,7 @@ export function Logo() {
       <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
         <GraduationCap size={18} />
       </span>
-      AI Study Assistant
+      Ray Study Assistant
     </Link>
   );
 }

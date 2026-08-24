@@ -55,7 +55,7 @@ function LoginForm() {
           <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary text-primary-foreground">
             <GraduationCap size={24} />
           </span>
-          <h1 className="text-2xl font-bold">AI Study Assistant</h1>
+          <h1 className="text-2xl font-bold">Ray Study Assistant</h1>
           <p className="text-sm text-muted-foreground">
             Masuk untuk melanjutkan belajarmu
           </p>

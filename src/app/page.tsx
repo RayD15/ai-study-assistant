@@ -130,7 +130,7 @@ export default function LandingPage() {
                 <span className="h-3 w-3 rounded-full bg-green-400" />
               </div>
               <span className="text-xs text-muted-foreground">
-                dashboard — AI Study Assistant
+                dashboard — Ray Study Assistant
               </span>
             </div>
             <div className="grid grid-cols-2 gap-4 p-6 text-left sm:grid-cols-4">

@@ -1,4 +1,4 @@
-# 📚 AI Study Assistant
+# 📚 Ray Study Assistant
 
 Asisten belajar berbasis AI yang membantu pelajar memahami materi pelajaran — bukan sekadar chatbot. Upload materi (PDF atau tempel teks), lalu belajar lebih efektif dengan ringkasan otomatis, quiz interaktif, flashcard, dan penjelasan konsep.
 
@@ -33,7 +33,6 @@ git clone https://github.com/RayD15/ai-study-assistant.git
 cd ai-study-assistant
 npm install
 ```
-
 ### 2. Setup environment variables
 
 Buat file `.env.local` di root project:
