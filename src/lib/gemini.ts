@@ -41,7 +41,7 @@ export function clampMaterial(content: string, maxChars = 12000): string {
 async function generate(prompt: string): Promise<string> {
   const ai = getClient();
 
-  // Retry sederhana untuk error sementara (503 high demand dsb.)
+  // Retry sederhana untuk error sementara (503 high demand dsb.).
   let lastErr: unknown = null;
   for (let attempt = 0; attempt < 3; attempt++) {
     try {
@@ -54,11 +54,30 @@ async function generate(prompt: string): Promise<string> {
     } catch (err) {
       lastErr = err;
       const msg = err instanceof Error ? err.message : String(err);
+
+      // Kuota harian habis -> jangan retry, percuma buang sisa kuota.
+      // (limit per-menit masih boleh di-retry setelah jeda)
+      if (/resource_exhausted|429/i.test(msg)) {
+        const isDaily = /PerDay|daily quota|generate_content_free_tier_requests/i.test(msg);
+        if (isDaily) {
+          throw new AiError(
+            "Kuota harian Gemini API sudah habis (batas tier gratis: 20 request/hari). Coba lagi besok atau aktifkan billing di Google AI Studio.",
+          );
+        }
+        if (attempt < 2) {
+          await new Promise((r) => setTimeout(r, 20000 * (attempt + 1)));
+          continue;
+        }
+        throw new AiError("Terlalu banyak permintaan ke Gemini. Tunggu sebentar lalu coba lagi.");
+      }
+
       // Hanya retry untuk error server/kapasitas, bukan kesalahan API key
-      if (!msg.includes("503") && !msg.includes("429") && !msg.includes("overload")) {
+      if (!msg.includes("503") && !msg.includes("overload") && !msg.includes("500")) {
         throw err;
       }
-      await new Promise((r) => setTimeout(r, 1500 * (attempt + 1)));
+      if (attempt < 2) {
+        await new Promise((r) => setTimeout(r, 1500 * (attempt + 1)));
+      }
     }
   }
   throw lastErr;

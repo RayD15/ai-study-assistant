@@ -2,12 +2,26 @@ import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/lib/auth";
 import { getDb, ensureSchema } from "@/lib/db";
 import { aiQuiz, type GeneratedQuizQuestion } from "@/lib/gemini";
+import { aiRateLimit } from "@/lib/rate-limit";
 
 /** Generate quiz baru dari materi + simpan ke database. */
 export async function POST(req: Request) {
   const user = await getCurrentUser();
   if (!user) {
     return NextResponse.json({ error: "Tidak terautentikasi." }, { status: 401 });
+  }
+
+  const rl = aiRateLimit(user.id, "quiz");
+  if (!rl.ok) {
+    return NextResponse.json(
+      {
+        error:
+          rl.kind === "daily"
+            ? "Kuota harian fitur AI tercapai (maksimal 60 request/hari). Coba lagi besok."
+            : `Terlalu banyak permintaan. Coba lagi dalam ${rl.retryAfterSec} detik.`,
+      },
+      { status: 429, headers: { "Retry-After": String(rl.retryAfterSec) } },
+    );
   }
 
   try {
