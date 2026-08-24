@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { GraduationCap, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { ThemeToggle, PasswordInput } from "@/components/ui-bits";
 
 export default function RegisterPage() {
@@ -58,8 +58,8 @@ export default function RegisterPage() {
           href="/"
           className="mb-8 flex flex-col items-center gap-2 text-center"
         >
-          <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary text-primary-foreground">
-            <GraduationCap size={24} />
+          <span className="flex h-12 w-12 items-center justify-center rounded-xl border border-border bg-card p-1.5">
+            <img src="/ray-logo.svg" alt="Ray Study Assistant" width={48} height={48} className="h-full w-full object-contain" />
           </span>
           <h1 className="text-2xl font-bold">Buat Akun Gratis</h1>
           <p className="text-sm text-muted-foreground">

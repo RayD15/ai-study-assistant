@@ -1,0 +1,25 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+<title>Ray Study Assistant - Mono</title>
+<rect width="512" height="512" fill="#FFFFFF" stroke="#0F0F14" stroke-width="12"/>
+<rect x="24" y="24" width="464" height="464" fill="none" stroke="#0F0F14" stroke-width="3"/>
+<g transform="translate(256, 210)">
+  <g transform="translate(-95, -70)">
+    <path d="M 10 28 C 10 28 52 10 95 28 L 95 145 C 52 127 10 145 10 145 Z" fill="#0F0F14"/>
+    <path d="M 95 28 C 138 10 180 28 180 28 L 180 145 C 180 145 138 127 95 145 Z" fill="none" stroke="#0F0F14" stroke-width="6" stroke-linejoin="round"/>
+    <path d="M 95 28 L 95 145" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/>
+    <g stroke="#FFFFFF" stroke-width="7" stroke-linecap="round">
+      <path d="M 28 65 L 78 65"/>
+      <path d="M 28 85 L 78 85"/>
+      <path d="M 112 65 L 162 65"/>
+      <path d="M 112 85 L 162 85"/>
+    </g>
+  </g>
+  <g transform="translate(78, -92)">
+    <path d="M 0 -24 L 6 -6 L 24 0 L 6 6 L 0 24 L -6 6 L -24 0 L -6 -6 Z" fill="#0F0F14" stroke="#0F0F14" stroke-width="3" stroke-linejoin="round"/>
+  </g>
+</g>
+<rect x="148" y="340" width="216" height="44" fill="#0F0F14"/>
+<text x="256" y="371" text-anchor="middle" font-family="'Space Mono', monospace" font-weight="700" font-size="26" fill="#FFFFFF" letter-spacing="8">RAY</text>
+<text x="256" y="420" text-anchor="middle" font-family="'Space Mono', monospace" font-weight="700" font-size="26" fill="#0F0F14" letter-spacing="6">STUDY</text>
+<text x="256" y="450" text-anchor="middle" font-family="'Space Mono', monospace" font-weight="400" font-size="14" fill="#0F0F14" letter-spacing="7">ASSISTANT</text>
+</svg>

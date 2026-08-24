@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { Eye, EyeOff, GraduationCap, Moon, Sun } from "lucide-react";
+import { Eye, EyeOff, Moon, Sun } from "lucide-react";
 import { useTheme } from "@/components/theme-provider";
 
 export function ThemeToggle() {
@@ -21,8 +21,8 @@ export function ThemeToggle() {
 export function Logo() {
   return (
     <Link href="/" className="flex items-center gap-2 font-semibold">
-      <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-        <GraduationCap size={18} />
+      <span className="flex h-8 w-8 items-center justify-center rounded-lg border border-border bg-card p-1">
+        <img src="/ray-logo.svg" alt="Ray Study Assistant" width={32} height={32} className="h-full w-full object-contain" />
       </span>
       Ray Study Assistant
     </Link>

@@ -1,0 +1,21 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+<title>Ray Study Assistant</title>
+<rect width="512" height="512" rx="120" fill="#FFFFFF"/>
+<rect width="512" height="512" rx="120" fill="none" stroke="#0F0F14" stroke-width="8"/>
+<g transform="translate(256, 260) scale(1.65)">
+  <g transform="translate(-95, -70)">
+    <path d="M 10 28 C 10 28 52 10 95 28 L 95 145 C 52 127 10 145 10 145 Z" fill="#0F0F14"/>
+    <path d="M 95 28 C 138 10 180 28 180 28 L 180 145 C 180 145 138 127 95 145 Z" fill="none" stroke="#0F0F14" stroke-width="6" stroke-linejoin="round"/>
+    <path d="M 95 28 L 95 145" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/>
+    <g stroke="#FFFFFF" stroke-width="7" stroke-linecap="round">
+      <path d="M 28 65 L 78 65"/>
+      <path d="M 28 85 L 78 85"/>
+      <path d="M 112 65 L 162 65"/>
+      <path d="M 112 85 L 162 85"/>
+    </g>
+  </g>
+  <g transform="translate(78, -92)">
+    <path d="M 0 -24 L 6 -6 L 24 0 L 6 6 L 0 24 L -6 6 L -24 0 L -6 -6 Z" fill="#0F0F14" stroke="#0F0F14" stroke-width="3" stroke-linejoin="round"/>
+  </g>
+</g>
+</svg>
